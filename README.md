@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Prueba técnica
 
 ## Cómo correr el proyecto
@@ -17,3 +18,6 @@
 - **Provider**: usado para gestión de estado del carrito
 - **GoRouter**: navegación declarativa con parámetros en URL
 - **Dos carritos independientes**: normal y express, se alternan según el switch
+=======
+# prueba_tecnica_exito
+>>>>>>> 23ce004c68c697757868a2437d097a3db882b592

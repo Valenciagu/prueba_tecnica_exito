@@ -39,14 +39,42 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartProvider>();
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/')),
+          onPressed: () => context.go('/'),
+        ),
         backgroundColor: const Color.fromRGBO(255, 204, 0, 1),
-        title: Text(widget.category.toUpperCase()),
+        title: SizedBox(
+          height: 40,
+          width: screenWidth > 600 ? 500 : double.infinity,
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Busca en tu app',
+                    prefixIcon: Icon(Icons.search),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Icon(Icons.person),
+              ),
+            ],
+          ),
+        ),
         actions: [
           Stack(
             children: [
@@ -58,14 +86,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 Positioned(
                   right: 6,
                   top: 6,
-                  child: CircleAvatar(
-                    radius: 8,
-                    backgroundColor: Colors.red,
-                    child: Text(
-                      '${cart.totalItems}',
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.white,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white),
+                    ),
+                    child: CircleAvatar(
+                      radius: 7,
+                      backgroundColor: Colors.red,
+                      child: Text(
+                        '${cart.totalItems}',
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -78,7 +112,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ? const Center(child: CircularProgressIndicator())
           : GridView.builder(
               padding: const EdgeInsets.all(12),
-              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: MediaQuery.of(context).size.width > 600 ? 4 : 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
@@ -122,7 +156,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
-                            color: Colors.green,
+                            color: const Color(0xFFD93A2F),
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -134,7 +168,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: cart.isExpressActive
                                         ? Colors.blue
-                                        : Color.fromRGBO(255, 204, 0, 1),
+                                        : const Color(0xFFFD6709),
                                   ),
                                   onPressed: () => cart.addProduct(product),
                                   child: const Text(
@@ -148,7 +182,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.remove_circle_outline),
+                                    icon: const Icon(
+                                      Icons.remove_circle_outline,
+                                    ),
                                     onPressed: () =>
                                         cart.removeProduct(product.id),
                                   ),
